@@ -28,5 +28,12 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'users.create', 'guard_name' => 'api']);
         Permission::create(['name' => 'users.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'users.delete', 'guard_name' => 'api']);
+
+        //permission for data teacher
+        Permission::create(['name' => 'datateachers.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'datateachers.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'datateachers.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'datateachers.delete', 'guard_name' => 'api']);
+
     }
 }

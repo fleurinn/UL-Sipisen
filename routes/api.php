@@ -58,5 +58,10 @@ Route::prefix('admin')->group(function () {
         //users
         Route::apiResource('/users', App\Http\Controllers\Api\Admin\UserController::class)
         ->middleware('permission:users.index|users.store|users.update|users.delete');
+
+        //data guru
+        Route::apiResource('/datateachers', App\Http\Controllers\Api\Admin\DataTeacherController::class)
+        ->middleware('permission:datateachers.index|datateachers.store|datateachers.update|datateachers.delete');
+
     });
 });
