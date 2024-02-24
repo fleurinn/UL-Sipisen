@@ -63,5 +63,9 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/datateachers', App\Http\Controllers\Api\Admin\DataTeacherController::class)
         ->middleware('permission:datateachers.index|datateachers.store|datateachers.update|datateachers.delete');
 
+        //data siswa
+        Route::apiResource('/datastudents', App\Http\Controllers\Api\Admin\DataStudentController::class)
+        ->middleware('permission:datastudents.index|datastudents.store|datastudents.update|datastudents.delete');
+
     });
 });

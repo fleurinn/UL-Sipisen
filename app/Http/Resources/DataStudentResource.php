@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DataTeacherResource extends JsonResource
+class DataStudentResource extends JsonResource
 {
     public $status;
     public $message;
@@ -14,7 +14,7 @@ class DataTeacherResource extends JsonResource
      * __construct
      * 
      * @param mixed $status
-     * @param mixed $messsage
+     * @param mixed $message 
      * @param mixed $resource
      * @return void
      */
@@ -22,7 +22,7 @@ class DataTeacherResource extends JsonResource
     {
         parent::__construct($resource);
         $this->status   = $status;
-        $this->message  = $message;
+        $this->message  = $message; 
     }
 
     /**
@@ -31,11 +31,11 @@ class DataTeacherResource extends JsonResource
      * @param \Illuminate\Http\Request $request
      * @return array
      */
-    public function toArray(Request $request)
+    public function toArray($request)
     {
         return [
             'success'      => $this->status,
-            'message'      => $this->message,
+            'message'      => $this->message, 
             'data'         => $this->resource
         ];
     }

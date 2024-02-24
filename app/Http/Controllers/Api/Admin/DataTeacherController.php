@@ -36,33 +36,35 @@ class DataTeacherController extends Controller
          * @return \Illuminate\Http\Response
          */
         public function store(Request $request)
-        {
-            /**
-             * Validate request
-             */
-            $validator = Validator::make($request->all(), [
-                'name'          => 'required',
-                'nip'   => 'required',
-                'gender'   => 'required',
-                'subject'   => 'required',
+            {
+                /**
+                 * Validate request
+                 */
+                $validator = Validator::make($request->all(), [
+                    'name' => 'required',
+                    'nip' => 'required',
+                    'gender' => 'required',
+                    'subject' => 'required',
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json($validator->errors(), 422);
+                }
+    
+           // Create DataTeacher
+            $datateacher = DataTeacher::create([
+                'name' => $request->name,
+                'nip' => $request->nip,
+                'gender' => $request->gender,
+                'subject' => $request->subject,
             ]);
-    
-            if ($validator->fails()) {
-                return response()->json($validator->errors(), 422);
-            }
-    
-            //create DataTeacher
-            $datateacher = DataTeacher::create(['name' => $request->name]);
-            $datateacher = DataTeacher::create(['nip' => $request->nip]);
-            $datateacher = DataTeacher::create(['gender' => $request->gender]);
-            $datateacher = DataTeacher::create(['subject' => $request->subject]);
-    
-            if($datateacher) {
-                //return success with Api Resource
+
+            if ($datateacher) {
+                // Return success with Api Resource
                 return new DataTeacherResource(true, 'Data Guru Berhasil di Simpan!', $datateacher);
             }
-    
-            //return failed with Api Resource
+
+            // Return failed with Api Resource
             return new DataTeacherResource(false, 'Data Guru Gagal di Simpan!', null);
         }
     
@@ -99,28 +101,30 @@ class DataTeacherController extends Controller
              * validate request
              */
             $validator = Validator::make($request->all(), [
-                'name'              => 'required',
-                'nip'               => 'required',
-                'gender'            => 'required',
-                'subject'           => 'required',
+                'name' => 'required',
+                'nip' => 'required',
+                'gender' => 'required',
+                'subject' => 'required',
             ]);
-    
+
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);
             }
-    
-            //update role
-            $datateacher->update(['name' => $request->name]);
-            $datateacher->update(['nip' => $request->nip]);
-            $datateacher->update(['gender' => $request->gender]);
-            $datateacher->update(['subject' => $request->subject]);
-    
-            if($datateacher) {
-                //return success with Api Resource
+
+            // Update DataTeacher
+            $datateacher->update([
+                'name' => $request->name,
+                'nip' => $request->nip,
+                'gender' => $request->gender,
+                'subject' => $request->subject,
+            ]);
+
+            if ($datateacher) {
+                // Return success with Api Resource
                 return new DataTeacherResource(true, 'Data Guru Berhasil di Update', $datateacher);
             }
-    
-            //return failed with Api Resource
+
+            // Return failed with Api Resource
             return new DataTeacherResource(false, 'Data Guru Gagal di Update', null);
         }
     
@@ -132,10 +136,10 @@ class DataTeacherController extends Controller
          */
         public function destroy($id)
         {
-            //find role by ID
+            //find dataguru by ID
             $datateacher = DataTeacher::findOrFail($id);
     
-            //delete role
+            //delete dataguru
             if($datateacher->delete()) {
                 //return success with Api Resource
                 return new DataTeacherResource(true, 'Data Guru Berhasil di Hapus!', null);
