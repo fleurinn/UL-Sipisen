@@ -11,9 +11,14 @@ class DataStudent extends Model
 
     protected $fillable = [
         'name',
+        'major_id',   
         'nisn',
         'no_hp',
         'alamat',
     ];
 
+    public function major()
+    {
+        return $this->belongsTo(Major::class);
+    }
 }

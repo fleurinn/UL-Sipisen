@@ -67,5 +67,17 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/datastudents', App\Http\Controllers\Api\Admin\DataStudentController::class)
         ->middleware('permission:datastudents.index|datastudents.store|datastudents.update|datastudents.delete');
 
+        //data student all
+        Route::get('/datastudents/all', [\App\Http\Controllers\Api\Admin\DataStudentController::class, 'all'])
+        ->middleware('permission:datastudents.index');
+
+        //jurusan
+        Route::apiResource('/majors', App\Http\Controllers\Api\Admin\MajorController::class)
+        ->middleware('permission:majors.index|majors.store|majors.update|majors.delete');
+
+        //absensi
+        Route::apiResource('/studentattendances', App\Http\Controllers\Api\Admin\StudentAttendanceController::class)
+        ->middleware('permission:studentattendances.index|studentattendances.store|studentattendances.update|studentattendances.delete');
+
     });
 });

@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Api\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\DataStudentResource;
+use App\Http\Resources\MajorResource;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
-use App\Models\DataStudent;
+use App\Models\Major;
     
-class DataStudentController extends Controller
+class MajorController extends Controller
     {
         /**
          * index
@@ -18,16 +17,16 @@ class DataStudentController extends Controller
          */
         public function index()
         {
-            //get DataStudent
-            $data_students  = DataStudent::when(request()->search, function($data_students) {
-                $data_students  = $data_students->where('name', 'like', '%'. request()->search . '%');
+            //get Major
+            $majors  = Major::when(request()->search, function($majors) {
+                $majors  = $majors->where('name', 'like', '%'. request()->search . '%');
             })->latest()->paginate(5);
     
             //append query string to pagination links
-            $data_students->appends(['search' => request()->search]);
+            $majors->appends(['search' => request()->search]);
     
             //return with Api Resource
-            return new DataStudentResource(true, 'List Data Siswa', $data_students);
+            return new MajorResource(true, 'List Data Jurusan', $majors);
         }
     
         /**
@@ -43,30 +42,24 @@ class DataStudentController extends Controller
              */
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
-                'nisn' => 'required',
-                'no_hp' => 'required',
-                'alamat' => 'required',
             ]);
 
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);
             }
 
-            // Create DataStudent
-            $datastudent = DataStudent::create([
+            // Create Major
+            $major = Major::create([
                 'name' => $request->name,
-                'nisn' => $request->nisn,
-                'no_hp' => $request->no_hp,
-                'alamat' => $request->alamat,
             ]);
 
-            if ($datastudent) {
+            if ($major) {
                 // Return success with Api Resource
-                return new DataStudentResource(true, 'Data Siswa Berhasil di Simpan!', $datastudent);
+                return new MajorResource(true, 'Data Jurusan Berhasil di Simpan!', $major);
             }
 
             // Return failed with Api Resource
-            return new DataStudentResource(false, 'Data Siswa Gagal di Simpan!', null);
+            return new MajorResource(false, 'Data Jurusan Gagal di Simpan!', null);
         }
     
         /**
@@ -78,15 +71,15 @@ class DataStudentController extends Controller
         public function show($id)
         {
             //get role
-            $datastudent = DataStudent::findOrFail($id);
+            $major = Major::findOrFail($id);
     
-            if($datastudent) {
+            if($major) {
                 //return success with Api Resource
-                return new DataStudentResource(true, 'Detail Data Siswa', $datastudent);
+                return new MajorResource(true, 'Detail Data Jurusan', $major);
             }
     
             //return failed with Api Resource
-            return new DataStudentResource(false, 'Data Siswa Tidak Ditemukan', null);
+            return new MajorResource(false, 'Data Jurusan Tidak Ditemukan', null);
         }
     
         /**
@@ -96,37 +89,31 @@ class DataStudentController extends Controller
          * @param int $id
          * @return \Illuminate\Http\Response
          */
-        public function update(Request $request, DataStudent $datastudent)
+        public function update(Request $request, Major $major)
         {
             /**
              * Validate request
              */
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
-                'nisn' => 'required',
-                'no_hp' => 'required',
-                'alamat' => 'required',
             ]);
 
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);
             }
 
-            // Update DataStudent
-            $datastudent->update([
+            // Update Major
+            $major->update([
                 'name' => $request->name,
-                'nisn' => $request->nisn,
-                'no_hp' => $request->no_hp,
-                'alamat' => $request->alamat,
             ]);
 
-            if ($datastudent) {
+            if ($major) {
                 // Return success with Api Resource
-                return new DataStudentResource(true, 'Data Siswa Berhasil di Update', $datastudent);
+                return new MajorResource(true, 'Data Jurusan Berhasil di Update', $major);
             }
 
             // Return failed with Api Resource
-            return new DataStudentResource(false, 'Data Siswa Gagal di Update', null);
+            return new MajorResource(false, 'Data Jurusan Gagal di Update', null);
         }
     
         /**
@@ -138,16 +125,16 @@ class DataStudentController extends Controller
         public function destroy($id)
         {
             // Find dataguru by ID
-            $datastudent = DataStudent::findOrFail($id);
+            $major = Major::findOrFail($id);
 
             // Delete dataguru
-            if ($datastudent->delete()) {
+            if ($major->delete()) {
                 // Return success with Api Resource
-                return new DataStudentResource(true, 'Data Siswa Berhasil di Hapus!', null);
+                return new MajorResource(true, 'Data Jurusan Berhasil di Hapus!', null);
             }
 
             // Return failed with Api Resource
-            return new DataStudentResource(false, 'Data Siswa Gagal di Hapus!', null);
+            return new MajorResource(false, 'Data Jurusan Gagal di Hapus!', null);
         }
 
         /**
@@ -157,18 +144,11 @@ class DataStudentController extends Controller
          */
         public function all()
         {
-            // //get DataStudent
-            $datastudent = DataStudent::latest()->get();
+            //get Major
+            $major = Major::latest()->get();
     
-            // $datastudent = DB::table('data_students')
-            // ->join('majors', 'majors.id', '=', 'data_students.major_id')
-            // ->select('data_students.*', 'majors.name')
-            // ->get();
-
             //return with Api Resource
-            return new DataStudentResource(true, 'List Data Siswa', $datastudent);
+            return new MajorResource(true, 'List Data Jurusan', $major);
         }
-
-        
     
     }
