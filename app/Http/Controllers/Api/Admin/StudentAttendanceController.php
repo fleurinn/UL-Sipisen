@@ -21,6 +21,10 @@ class StudentAttendanceController extends Controller
         // Get StudentAttendance
         $studentattendances = StudentAttendance::with(['data_students' => function ($query) {
             $query->select('id', 'name');
+        }, 'majors' => function ($query) {
+            $query->select('id', 'name');
+        }, 'classstudents' => function ($query) {
+            $query->select('id', 'name');
         }])->when(request()->has('search'), function ($query) {
             $query->where('data_students_id', 'like', '%' . request()->search . '%');
         })->latest()->paginate(5);
@@ -45,6 +49,8 @@ class StudentAttendanceController extends Controller
          */
         $validator = Validator::make($request->all(), [
             'data_students_id' => 'required',
+            'majors_id' => 'required',
+            'classstudents_id' => 'required',
             'description' => 'required',
         ]);
 
@@ -55,6 +61,8 @@ class StudentAttendanceController extends Controller
         // Create StudentAttendance
         $studentattendance = StudentAttendance::create([
             'data_students_id' => $request->data_students_id,
+            'majors_id' => $request->majors_id,
+            'classstudents_id' => $request->classstudents_id,
             'description' => $request->description,
         ]);
 
@@ -74,10 +82,10 @@ class StudentAttendanceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        $studentattendance = StudentAttendance::with(['data_students' => function ($query) {
+        {
+            $studentattendance = StudentAttendance::with(['data_students' => function ($query) {
             $query->select('id', 'name');
-        }])->whereId($id)->first();
+        }, 'majors:name', 'classstudents:name'])->whereId($id)->first();
         
         if($studentattendance) {
             // Return success with Api Resource
@@ -103,6 +111,8 @@ class StudentAttendanceController extends Controller
          */
         $validator = Validator::make($request->all(), [
             'data_students_id' => 'required',
+            'majors_id' => 'required',
+            'classstudents_id' => 'required',
             'description' => 'required',
         ]);
 
@@ -113,6 +123,8 @@ class StudentAttendanceController extends Controller
         // Update StudentAttendance
         $studentattendance->update([
             'data_students_id'   => $request->data_students_id,
+            'majors_id'   => $request->majors_id,
+            'classstudents_id' => $request->classstudents_id,
             'description' => $request->description,
         ]);
 

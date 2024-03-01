@@ -75,6 +75,10 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/majors', App\Http\Controllers\Api\Admin\MajorController::class)
         ->middleware('permission:majors.index|majors.store|majors.update|majors.delete');
 
+        //kelas
+        Route::apiResource('/classstudents', App\Http\Controllers\Api\Admin\StudentAttendanceController::class)
+        ->middleware('permission:classstudents.index|classstudents.store|classstudents.update|classstudents.delete');
+
         //absensi
         Route::apiResource('/studentattendances', App\Http\Controllers\Api\Admin\StudentAttendanceController::class)
         ->middleware('permission:studentattendances.index|studentattendances.store|studentattendances.update|studentattendances.delete');

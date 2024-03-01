@@ -47,6 +47,12 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'majors.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'majors.delete', 'guard_name' => 'api']);
 
+        //permission for classstudents
+        Permission::create(['name' => 'classstudents.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'classstudents.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'classstudents.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'classstudents.delete', 'guard_name' => 'api']);
+
         //permission for studentattendances
         Permission::create(['name' => 'studentattendances.index', 'guard_name' => 'api']);
         Permission::create(['name' => 'studentattendances.create', 'guard_name' => 'api']);

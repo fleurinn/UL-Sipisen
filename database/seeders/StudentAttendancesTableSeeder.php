@@ -12,8 +12,10 @@ class StudentAttendancesTableSeeder extends Seeder
      */
     public function run()
     {
-        StudentAttendance::factory()->create([
+        StudentAttendance::create([
             'data_students_id' => 1,
+            'majors_id' => 1,
+            'classstudents_id' => 1,
             'description' => 'HADIR',
         ]);
     }

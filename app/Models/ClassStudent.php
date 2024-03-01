@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Major extends Model
+class ClassStudent extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'majors'; // Disuaikan dengan nama tabel di database
+    protected $table = 'classstudents'; // Disuaikan dengan nama tabel di database
 
     /**
      * The attributes that are mass assignable.
@@ -37,7 +37,7 @@ class Major extends Model
      */
     public function studentAttendances()
     {
-        return $this->hasMany(StudentAttendance::class, 'majors_id');
+        return $this->hasMany(StudentAttendance::class, 'classstudents_id');
     }
 }
 
