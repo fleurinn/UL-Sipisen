@@ -21,7 +21,7 @@ class Schedule extends Model
      */
     public function majors()
     {
-        return $this->belongsTo(Major::class, 'majors_id')->select('id', 'name');
+        return $this->belongsTo(Major::class, 'majors_id');
     }
 
 
@@ -31,7 +31,7 @@ class Schedule extends Model
      */
     public function classstudents()
     {
-        return $this->belongsTo(ClassStudent::class, 'classstudents_id')->select('id', 'name');
+        return $this->belongsTo(ClassStudent::class);
     }
 
     /**

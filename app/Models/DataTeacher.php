@@ -62,7 +62,7 @@ class DataTeacher extends Model
      */
     public function schedules()
     {
-        return $this->hasMany(Schedule::class);
+        return $this->hasOne(Schedule::class);
     }
 
 }

@@ -18,23 +18,31 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $scheduleMonday = DB::table('schedule_mondays')
-        ->join('subjects', 'schedule_mondays.subjects_id', '=', 'subjects.id')
-        ->join('data_teachers', 'schedule_mondays.data_teachers_id', '=', 'data_teachers.id')
-        ->select('schedule_mondays.*', 'subjects.name as subject_name', 'data_teachers.name as teacher_name')
-        ->get();
-    
-        $scheduleTuesday = DB::table('schedule_tuesdays')
-        ->join('subjects', 'schedule_tuesdays.subjects_id', '=', 'subjects.id')
-        ->join('data_teachers', 'schedule_tuesdays.data_teachers_id', '=', 'data_teachers.id')
-        ->select('schedule_tuesdays.*', 'subjects.name as subject_name', 'data_teachers.name as teacher_name')
-        ->get();
-    
-    return [
-        'scheduleMonday' => $scheduleMonday,
-        'scheduleTuesday' => $scheduleTuesday,
-    ];
-    
+        // Dapatkan Schedule
+        $schedules = Schedule::with([
+            'majors' => function ($query) {
+                $query->select('id', 'name');
+            }, 
+            'classstudents' => function ($query) {
+                $query->select('id', 'name');
+            },  
+            'schedule_mondays.subjects',
+            'schedule_mondays.data_teachers', 
+            'schedule_tuesdays.subjects',
+            'schedule_tuesdays.data_teachers',
+            'schedule_wednesdays.subjects', 
+            'schedule_wednesdays.data_teachers',
+            'schedule_thursdays.subjects',
+            'schedule_thursdays.data_teachers',
+            'schedule_fridays.subjects',
+            'schedule_fridays.data_teachers',
+        ])->when(request()->has('search'), function ($query) {
+            $query->where('classstudents_id', 'like', '%' . request()->search . '%');
+        })->latest()->paginate(5);
+                
+
+        // Tambahkan query string ke pagination links
+        $schedules->appends(['search' => request()->search]);
 
         // Return dengan Api Resource
         return new ScheduleResource(true, 'List Data Kehadiran Siswa', $schedules);
@@ -100,21 +108,16 @@ class ScheduleController extends Controller
             'classstudents' => function ($query) {
                 $query->select('id', 'name');
             }, 
-            'schedule_mondays' => function ($query) {
-                $query->select('id', 'subjects_id', 'data_teachers_id', 'start_time', 'end_time');
-            },
-            'schedule_tuesdays' => function ($query) {
-                $query->select('id', 'subjects_id', 'data_teachers_id', 'start_time', 'end_time');
-            },
-            'schedule_wednesdays' => function ($query) {
-                $query->select('id', 'subjects_id', 'data_teachers_id', 'start_time', 'end_time');
-            },
-            'schedule_thursdays' => function ($query) {
-                $query->select('id', 'subjects_id', 'data_teachers_id', 'start_time', 'end_time');
-            },
-            'schedule_fridays' => function ($query) {
-                $query->select('id', 'subjects_id', 'data_teachers_id', 'start_time', 'end_time');
-            }
+            'schedule_mondays.subjects',
+            'schedule_mondays.data_teachers', 
+            'schedule_tuesdays.subjects',
+            'schedule_tuesdays.data_teachers',
+            'schedule_wednesdays.subjects', 
+            'schedule_wednesdays.data_teachers',
+            'schedule_thursdays.subjects',
+            'schedule_thursdays.data_teachers',
+            'schedule_fridays.subjects',
+            'schedule_fridays.data_teachers',
         ])->where('classstudents_id', $id)->get();
 
         if($schedule) {
