@@ -45,7 +45,7 @@ class ScheduleController extends Controller
         $schedules->appends(['search' => request()->search]);
 
         // Return dengan Api Resource
-        return new ScheduleResource(true, 'List Data Kehadiran Siswa', $schedules);
+        return new ScheduleResource(true, 'List Data Jadwal Mata Pelajaran', $schedules);
     }
     
     /**
@@ -86,11 +86,11 @@ class ScheduleController extends Controller
 
         if ($schedule) {
             // Return success with Api Resource
-            return new ScheduleResource(true, 'Data Kehadiran Siswa Berhasil di Simpan!', $schedule);
+            return new ScheduleResource(true, 'Data Jadwal Mata Pelajaran Berhasil di Simpan!', $schedule);
         }
 
         // Return failed with Api Resource
-        return new ScheduleResource(false, 'Data Kehadiran Siswa Gagal di Simpan!', null);
+        return new ScheduleResource(false, 'Data Jadwal Mata Pelajaran Gagal di Simpan!', null);
     }
     
     /**
@@ -122,11 +122,11 @@ class ScheduleController extends Controller
 
         if($schedule) {
             // Return success with Api Resource
-            return new ScheduleResource(true, 'Detail Data Kehadiran!', $schedule);
+            return new ScheduleResource(true, 'Detail Data Jadwal Mata Pelajaran!', $schedule);
         }
         
         // Return failed with Api Resource
-        return new ScheduleResource(false, 'Detail Data Kehadiran Tidak Ditemukan!', null);
+        return new ScheduleResource(false, 'Detail Data Jadwal Mata Pelajaran Tidak Ditemukan!', null);
     }
 
 
@@ -169,11 +169,11 @@ class ScheduleController extends Controller
 
         if ($schedule) {
             // Return success with Api Resource
-            return new ScheduleResource(true, 'Data Kehadiran Siswa Berhasil di Update', $schedule);
+            return new ScheduleResource(true, 'Data Jadwal Mata Pelajaran Berhasil di Update', $schedule);
         }
 
         // Return failed with Api Resource
-        return new ScheduleResource(false, 'Data  Kehadiran Siswa Gagal di Update', null);
+        return new ScheduleResource(false, 'Data  Jadwal Mata Pelajaran Gagal di Update', null);
     }
     
     /**
@@ -188,17 +188,17 @@ class ScheduleController extends Controller
         $schedule = Schedule::find($id);
 
         if (!$schedule) {
-            return new ScheduleResource(false, 'Data Kehadiran Siswa Tidak Ditemukan!', null);
+            return new ScheduleResource(false, 'Data Jadwal Mata Pelajaran Tidak Ditemukan!', null);
         }
 
         // Hapus schedule
         if ($schedule->delete()) {
             // Return success with Api Resource
-            return new ScheduleResource(true, 'Data Kehadiran Siswa Berhasil di Hapus!', null);
+            return new ScheduleResource(true, 'Data Jadwal Mata Pelajaran Berhasil di Hapus!', null);
         }
 
         // Return failed with Api Resource
-        return new ScheduleResource(false, 'Data Kehadiran Siswa Gagal di Hapus!', null);
+        return new ScheduleResource(false, 'Data Jadwal Mata Pelajaran Gagal di Hapus!', null);
     }
 
 
@@ -213,7 +213,7 @@ class ScheduleController extends Controller
         $schedules = Schedule::latest()->get();
 
         // Kembalikan dengan Api Resource
-        return new ScheduleResource(true, 'List Data Kehadiran Kehadiran Siswa', $schedules);
+        return new ScheduleResource(true, 'List Data Jadwal Mata Pelajaran', $schedules);
     }
 }
 
