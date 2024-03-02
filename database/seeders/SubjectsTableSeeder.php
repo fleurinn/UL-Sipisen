@@ -3,17 +3,17 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Major; // Tambahkan ini untuk memuat model Major
+use App\Models\Subject; 
 
-class MajorsTableSeeder extends Seeder
+class SubjectsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run()
     {
-        Major::create([
-            'name' => 'Teknik Otomotif'
+        Subject::create([
+            'name' => 'Matematika'
         ]);
     }
 }

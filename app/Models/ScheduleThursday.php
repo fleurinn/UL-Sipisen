@@ -1,19 +1,17 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class ClassStudent extends Model
+class ScheduleThursday extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'classstudents'; // Disuaikan dengan nama tabel di database
+    protected $table = 'schedule_thursdays'; 
 
     /**
      * The attributes that are mass assignable.
@@ -21,19 +19,26 @@ class ClassStudent extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'subjects_id', 'data_teachers_id', 'start_time', 'end_time'
     ];
 
 
-
     /**
-     * Get the student attendances for the major.
+     * Get the data teacher for the schedule monday.
      */
-    public function StudentAttendances()
+    public function subjects()
     {
-        return $this->hasMany(StudentAttendance::class, 'classstudents_id');
+        return $this->belongsTo(Subject::class)->select('id','name');
     }
 
+    /**
+     * Get the data teacher for the schedule monday.
+     */
+    public function data_teachers()
+    {
+        return $this->belongsTo(DataTeacher::class)->select('id','name');
+    }
+    
     /**
      * Get the student schedule .
      */
@@ -41,5 +46,6 @@ class ClassStudent extends Model
     {
         return $this->hasMany(Schedule::class);
     }
-}
 
+
+}

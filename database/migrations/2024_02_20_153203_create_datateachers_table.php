@@ -13,10 +13,10 @@ class CreateDataTeachersTable extends Migration
     {
         Schema::create('data_teachers', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->default('Lismah Nurhayati');
-            $table->string('nip')->default('0123456789');
-            $table->string('gender')->default('L');
-            $table->string('subject')->default('Bahasa Indonesia');
+            $table->string('name', 100)->required();
+            $table->string('nip', 20)->required();
+            $table->string('gender', 1)->required();
+            $table->string('subject', 20)->required();
             $table->timestamps();
         });
     }

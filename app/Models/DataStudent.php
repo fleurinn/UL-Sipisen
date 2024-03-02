@@ -11,30 +11,10 @@ class DataStudent extends Model
 
     protected $fillable = [
         'name',
-        'majors_id',
-        'classstudents_id',   
         'nisn',
         'no_hp',
         'alamat',
     ];
-
-    /**
-     * Get the Majors for the Student.
-     * one to many
-     */
-    public function majors()
-    {
-        return $this->belongsTo(Major::class)->select('id', 'name');
-    }
-
-    /**
-     * Get the class for the Student.
-     * one to many
-     */
-    public function classstudents()
-    {
-        return $this->belongsTo(ClassStudent::class)->select('id', 'name');
-    }
 
     /**
      * Get the student attendances for the Student.

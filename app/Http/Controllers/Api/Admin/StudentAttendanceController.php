@@ -82,11 +82,17 @@ class StudentAttendanceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-        {
-            $studentattendance = StudentAttendance::with(['data_students' => function ($query) {
-            $query->select('id', 'name');
-        }, 'majors:name', 'classstudents:name'])->whereId($id)->first();
-        
+    {
+        $studentattendance = StudentAttendance::with([
+            'data_students' => function ($query) {
+                $query->select('id', 'name');
+            },'majors' => function ($query) {
+                $query->select('id', 'name');
+            },'classstudents' => function ($query) {
+                $query->select('id', 'name');
+            }
+        ])->where('data_students_id', $id)->get();
+
         if($studentattendance) {
             // Return success with Api Resource
             return new StudentAttendanceResource(true, 'Detail Data Kehadiran!', $studentattendance);

@@ -5,26 +5,32 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DataTeacher extends Model
+class Subject extends Model
 {
-    protected $table = 'data_teachers'; // Nama tabel dalam basis data
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'subjects'; 
 
-    
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'name',
-        'nip',
-        'gender',
-        'subject',
+        'name'
     ];
 
     /**
-     * Get the schedule monday for the data teacher.
+     * Get the schedule monday for the subject.
      */
     public function schedule_mondays()
     {
         return $this->hasMany(ScheduleMonday::class);
     }
-
+    
     /**
      * Get the schedule monday for the subject.
      */
@@ -64,5 +70,4 @@ class DataTeacher extends Model
     {
         return $this->hasMany(Schedule::class);
     }
-
 }

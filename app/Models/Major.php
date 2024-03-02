@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Major extends Model
 {
@@ -13,7 +12,7 @@ class Major extends Model
      *
      * @var string
      */
-    protected $table = 'majors'; // Disuaikan dengan nama tabel di database
+    protected $table = 'majors'; 
 
     /**
      * The attributes that are mass assignable.
@@ -21,23 +20,23 @@ class Major extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'name'
     ];
 
-    /**
-     * Get the students for the majors.
-     */
-    public function students(): HasMany
-    {
-        return $this->hasMany(Student::class);
-    }
 
     /**
      * Get the student attendances for the major.
      */
-    public function studentAttendances()
+    public function studentattendances()
     {
-        return $this->hasMany(StudentAttendance::class, 'majors_id');
+        return $this->hasMany(StudentAttendance::class);
+    }
+
+    /**
+     * Get the student schedule for the major.
+     */
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
     }
 }
-

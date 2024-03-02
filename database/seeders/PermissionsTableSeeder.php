@@ -58,5 +58,48 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'studentattendances.create', 'guard_name' => 'api']);
         Permission::create(['name' => 'studentattendances.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'studentattendances.delete', 'guard_name' => 'api']);
+        
+        //permission for subjects
+        Permission::create(['name' => 'subjects.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'subjects.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'subjects.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'subjects.delete', 'guard_name' => 'api']);
+ 
+        //permission for schedulemondays
+        Permission::create(['name' => 'schedulemondays.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedulemondays.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedulemondays.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedulemondays.delete', 'guard_name' => 'api']);
+
+        //permission for scheduletuesdays
+        Permission::create(['name' => 'scheduletuesdays.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'scheduletuesdays.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'scheduletuesdays.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'scheduletuesdays.delete', 'guard_name' => 'api']);
+
+        //permission for schedulewednesdays
+        Permission::create(['name' => 'schedulewednesdays.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedulewednesdays.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedulewednesdays.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedulewednesdays.delete', 'guard_name' => 'api']);
+
+        //permission for schedulethursdays
+        Permission::create(['name' => 'schedulethursdays.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedulethursdays.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedulethursdays.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedulethursdays.delete', 'guard_name' => 'api']);
+
+        //permission for schedulefridays
+        Permission::create(['name' => 'schedulefridays.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedulefridays.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedulefridays.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedulefridays.delete', 'guard_name' => 'api']);
+
+        //permission for schedules
+        Permission::create(['name' => 'schedules.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedules.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedules.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'schedules.delete', 'guard_name' => 'api']);
+
     }
 }

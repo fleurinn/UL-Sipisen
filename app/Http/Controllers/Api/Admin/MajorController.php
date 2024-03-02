@@ -18,9 +18,11 @@ class MajorController extends Controller
         public function index()
         {
             //get Major
-            $majors  = Major::when(request()->search, function($majors) {
-                $majors  = $majors->where('name', 'like', '%'. request()->search . '%');
+            $majors = Major::when(request()->search, function($majors) {
+                $majors = $majors->where('name', 'like', '%'. request()->search . '&');
             })->latest()->paginate(5);
+
+
     
             //append query string to pagination links
             $majors->appends(['search' => request()->search]);
@@ -70,9 +72,8 @@ class MajorController extends Controller
          */
         public function show($id)
         {
-            //get role
             $major = Major::findOrFail($id);
-    
+            
             if($major) {
                 //return success with Api Resource
                 return new MajorResource(true, 'Detail Data Jurusan', $major);

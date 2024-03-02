@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Api\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ClassStudentResource;
+use App\Http\Resources\SubjectResource;
 use Illuminate\Support\Facades\Validator;
-use App\Models\ClassStudent;
+use App\Models\Subject;
     
-class ClassStudentController extends Controller
+class SubjectController extends Controller
     {
         /**
          * index
@@ -17,16 +17,18 @@ class ClassStudentController extends Controller
          */
         public function index()
         {
-            //get ClassStudent
-            $classstudents = ClassStudent::when(request()->search, function($classstudents) {
-                $classstudents = $classstudents->where('name', 'like', '%'. request()->search . '&');
+            //get Subject
+            $subjects = Subject::when(request()->search, function($subjects) {
+                $subjects = $subjects->where('name', 'like', '%'. request()->search . '&');
             })->latest()->paginate(5);
 
+
+    
             //append query string to pagination links
-            $classstudents->appends(['search' => request()->search]);
+            $subjects->appends(['search' => request()->search]);
     
             //return with Api Resource
-            return new ClassStudentResource(true, 'List Data Kelas', $classstudents);
+            return new SubjectResource(true, 'List Data Jurusan', $subjects);
         }
     
         /**
@@ -48,18 +50,18 @@ class ClassStudentController extends Controller
                 return response()->json($validator->errors(), 422);
             }
 
-            // Create ClassStudent
-            $classstudent = ClassStudent::create([
+            // Create Subject
+            $subject = Subject::create([
                 'name' => $request->name,
             ]);
 
-            if ($classstudent) {
+            if ($subject) {
                 // Return success with Api Resource
-                return new ClassStudentResource(true, 'Data Kelas Berhasil di Simpan!', $classstudent);
+                return new SubjectResource(true, 'Data Jurusan Berhasil di Simpan!', $subject);
             }
 
             // Return failed with Api Resource
-            return new ClassStudentResource(false, 'Data Kelas Gagal di Simpan!', null);
+            return new SubjectResource(false, 'Data Jurusan Gagal di Simpan!', null);
         }
     
         /**
@@ -70,16 +72,15 @@ class ClassStudentController extends Controller
          */
         public function show($id)
         {
-            //get role
-            $classstudent = ClassStudent::findOrFail($id);
-    
-            if($classstudent) {
+            $subject = Subject::findOrFail($id);
+            
+            if($subject) {
                 //return success with Api Resource
-                return new ClassStudentResource(true, 'Detail Data Kelas', $classstudent);
+                return new SubjectResource(true, 'Detail Data Jurusan', $subject);
             }
     
             //return failed with Api Resource
-            return new ClassStudentResource(false, 'Data Kelas Tidak Ditemukan', null);
+            return new SubjectResource(false, 'Data Jurusan Tidak Ditemukan', null);
         }
     
         /**
@@ -89,7 +90,7 @@ class ClassStudentController extends Controller
          * @param int $id
          * @return \Illuminate\Http\Response
          */
-        public function update(Request $request, ClassStudent $classstudent)
+        public function update(Request $request, Subject $subject)
         {
             /**
              * Validate request
@@ -102,18 +103,18 @@ class ClassStudentController extends Controller
                 return response()->json($validator->errors(), 422);
             }
 
-            // Update ClassStudent
-            $classstudent->update([
+            // Update Subject
+            $subject->update([
                 'name' => $request->name,
             ]);
 
-            if ($classstudent) {
+            if ($subject) {
                 // Return success with Api Resource
-                return new ClassStudentResource(true, 'Data Kelas Berhasil di Update', $classstudent);
+                return new SubjectResource(true, 'Data Jurusan Berhasil di Update', $subject);
             }
 
             // Return failed with Api Resource
-            return new ClassStudentResource(false, 'Data Kelas Gagal di Update', null);
+            return new SubjectResource(false, 'Data Jurusan Gagal di Update', null);
         }
     
         /**
@@ -125,16 +126,16 @@ class ClassStudentController extends Controller
         public function destroy($id)
         {
             // Find dataguru by ID
-            $classstudent = ClassStudent::findOrFail($id);
+            $subject = Subject::findOrFail($id);
 
             // Delete dataguru
-            if ($classstudent->delete()) {
+            if ($subject->delete()) {
                 // Return success with Api Resource
-                return new ClassStudentResource(true, 'Data Kelas Berhasil di Hapus!', null);
+                return new SubjectResource(true, 'Data Jurusan Berhasil di Hapus!', null);
             }
 
             // Return failed with Api Resource
-            return new ClassStudentResource(false, 'Data Kelas Gagal di Hapus!', null);
+            return new SubjectResource(false, 'Data Jurusan Gagal di Hapus!', null);
         }
 
         /**
@@ -144,11 +145,11 @@ class ClassStudentController extends Controller
          */
         public function all()
         {
-            //get ClassStudent
-            $classstudent = ClassStudent::latest()->get();
+            //get Subject
+            $subject = Subject::latest()->get();
     
             //return with Api Resource
-            return new ClassStudentResource(true, 'List Data Kelas', $classstudent);
+            return new SubjectResource(true, 'List Data Jurusan', $subject);
         }
     
     }

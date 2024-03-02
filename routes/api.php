@@ -67,21 +67,44 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/datastudents', App\Http\Controllers\Api\Admin\DataStudentController::class)
         ->middleware('permission:datastudents.index|datastudents.store|datastudents.update|datastudents.delete');
 
-        //data student all
-        Route::get('/datastudents/all', [\App\Http\Controllers\Api\Admin\DataStudentController::class, 'all'])
-        ->middleware('permission:datastudents.index');
-
         //jurusan
         Route::apiResource('/majors', App\Http\Controllers\Api\Admin\MajorController::class)
         ->middleware('permission:majors.index|majors.store|majors.update|majors.delete');
 
         //kelas
-        Route::apiResource('/classstudents', App\Http\Controllers\Api\Admin\StudentAttendanceController::class)
+        Route::apiResource('/classstudents', App\Http\Controllers\Api\Admin\ClassStudentController::class)
         ->middleware('permission:classstudents.index|classstudents.store|classstudents.update|classstudents.delete');
 
         //absensi
         Route::apiResource('/studentattendances', App\Http\Controllers\Api\Admin\StudentAttendanceController::class)
         ->middleware('permission:studentattendances.index|studentattendances.store|studentattendances.update|studentattendances.delete');
 
+        //subjects
+        Route::apiResource('/subjects', App\Http\Controllers\Api\Admin\SubjectController::class)
+        ->middleware('permission:subjects.index|subjects.store|subjects.update|subjects.delete');
+
+        //schedule mondays
+        Route::apiResource('/schedulemondays', App\Http\Controllers\Api\Admin\ScheduleMondayController::class)
+        ->middleware('permission:schedulemondays.index|schedulemondays.store|schedulemondays.update|schedulemondays.delete');
+
+        //schedule tuesdays
+        Route::apiResource('/scheduletuesdays', App\Http\Controllers\Api\Admin\ScheduleTuesdayController::class)
+        ->middleware('permission:scheduletuesdays.index|scheduletuesdays.store|scheduletuesdays.update|scheduletuesdays.delete');
+
+        //schedule wednesdays
+        Route::apiResource('/schedulewednesdays', App\Http\Controllers\Api\Admin\ScheduleWednesdayController::class)
+        ->middleware('permission:schedulewednesdays.index|schedulewednesdays.store|schedulewednesdays.update|schedulewednesdays.delete');
+
+        //schedule thursdays
+        Route::apiResource('/schedulethursdays', App\Http\Controllers\Api\Admin\ScheduleThursdayController::class)
+        ->middleware('permission:schedulethursdays.index|schedulethursdays.store|schedulethursdays.update|schedulethursdays.delete');
+
+        //schedule fridays
+        Route::apiResource('/schedulefridays', App\Http\Controllers\Api\Admin\ScheduleFridayController::class)
+        ->middleware('permission:schedulefridays.index|schedulefridays.store|schedulefridays.update|schedulefridays.delete');
+
+        //schedule 
+        Route::apiResource('/schedules', App\Http\Controllers\Api\Admin\ScheduleController::class)
+        ->middleware('permission:schedules.index|schedules.store|schedules.update|schedules.delete');
     });
 });
