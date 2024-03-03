@@ -64,5 +64,4 @@ class DataTeacher extends Model
     {
         return $this->hasOne(Schedule::class);
     }
-
 }

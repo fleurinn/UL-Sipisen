@@ -101,5 +101,11 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'schedules.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'schedules.delete', 'guard_name' => 'api']);
 
+        //permission for izins
+        Permission::create(['name' => 'izins.index', 'guard_name' => 'api']);
+        Permission::create(['name' => 'izins.create', 'guard_name' => 'api']);
+        Permission::create(['name' => 'izins.edit', 'guard_name' => 'api']);
+        Permission::create(['name' => 'izins.delete', 'guard_name' => 'api']);
+        
     }
 }

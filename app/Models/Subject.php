@@ -70,4 +70,12 @@ class Subject extends Model
     {
         return $this->hasOne(Schedule::class);
     }
+
+    /**
+     * Get the schedule monday for the subject.
+     */
+    public function izins()
+    {
+        return $this->hasOne(Izin::class);
+    }
 }

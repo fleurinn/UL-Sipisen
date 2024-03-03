@@ -106,5 +106,10 @@ Route::prefix('admin')->group(function () {
         //schedule 
         Route::apiResource('/schedules', App\Http\Controllers\Api\Admin\ScheduleController::class)
         ->middleware('permission:schedules.index|schedules.store|schedules.update|schedules.delete');
+
+        //izin 
+        Route::apiResource('/izins', App\Http\Controllers\Api\Admin\IzinController::class)
+        ->middleware('permission:izins.index|izins.store|izins.update|izins.delete');
+   
     });
 });
