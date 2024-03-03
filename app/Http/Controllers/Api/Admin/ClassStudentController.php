@@ -18,9 +18,12 @@ class ClassStudentController extends Controller
         public function index()
         {
             //get ClassStudent
-            $classstudents = ClassStudent::when(request()->search, function($classstudents) {
-                $classstudents = $classstudents->where('name', 'like', '%'. request()->search . '&');
-            })->latest()->paginate(5);
+            $classstudents = ClassStudent::with(['majors' => function ($query) {
+                $query->select('id', 'name');
+            }])->select('id', 'majors_id', 'name')
+            ->when(request()->search, function($query) {
+                $query->where('majors_id', 'like', '%' . request()->search . '%');
+            })->latest()->paginate(5); 
 
             //append query string to pagination links
             $classstudents->appends(['search' => request()->search]);
@@ -41,7 +44,8 @@ class ClassStudentController extends Controller
              * Validate request
              */
             $validator = Validator::make($request->all(), [
-                'name' => 'required',
+                'majors_id' => 'required',
+                'name' => 'required'
             ]);
 
             if ($validator->fails()) {
@@ -50,6 +54,7 @@ class ClassStudentController extends Controller
 
             // Create ClassStudent
             $classstudent = ClassStudent::create([
+                'majors_id' => $request->majors_id,
                 'name' => $request->name,
             ]);
 
@@ -70,9 +75,12 @@ class ClassStudentController extends Controller
          */
         public function show($id)
         {
-            //get role
-            $classstudent = ClassStudent::findOrFail($id);
-    
+            //get class
+            $classstudent = ClassStudent::with(['majors' => function ($query) {
+                $query->select('id', 'name');
+            }])->select('id', 'majors_id', 'name')
+            ->where('majors_id', $id)->get();
+
             if($classstudent) {
                 //return success with Api Resource
                 return new ClassStudentResource(true, 'Detail Data Kelas', $classstudent);
@@ -95,7 +103,9 @@ class ClassStudentController extends Controller
              * Validate request
              */
             $validator = Validator::make($request->all(), [
-                'name' => 'required',
+                'majors_id' => 'required',
+                'name' => 'required'
+                
             ]);
 
             if ($validator->fails()) {
@@ -104,7 +114,8 @@ class ClassStudentController extends Controller
 
             // Update ClassStudent
             $classstudent->update([
-                'name' => $request->name,
+            'majors_id' => $request->majors_id,
+            'name' => $request->name
             ]);
 
             if ($classstudent) {

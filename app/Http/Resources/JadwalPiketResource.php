@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TeacherAttendanceResource extends JsonResource
+class JadwalPiketResource extends JsonResource
 {
     public $status;
     public $message;
@@ -22,20 +22,20 @@ class TeacherAttendanceResource extends JsonResource
     {
         parent::__construct($resource);
         $this->status   = $status;
-        $this->message  = $message; 
+        $this->message  = $message;
     }
 
     /**
      * Transform the resource into an array.
      * 
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request 
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request) // parameter fixed
     {
         return [
             'success'      => $this->status,
-            'message'      => $this->message, 
+            'message'      => $this->message,
             'data'         => $this->resource
         ];
     }

@@ -21,7 +21,7 @@ class ClassStudent extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'majors_id','name'
     ];
 
 
@@ -48,6 +48,19 @@ class ClassStudent extends Model
     public function izins()
     {
         return $this->hasOne(Izin::class);
+    }
+
+    /**
+     * Get the schedule monday for the subject.
+     */
+    public function majors()
+    {
+        return $this->belongsTo(Major::class)->select('id', 'name');
+    }
+
+    public function data_students()
+    {
+        return $this->hasMany(DataStudent::class);
     }
 }
 

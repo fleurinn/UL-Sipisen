@@ -13,7 +13,8 @@ class DataStudentsTableSeeder extends Seeder
     public function run()
     {
         DataStudent::create([
-            'name' => 'Lismah',
+            'classstudents_id' => 1,
+            'name' => 'Adhya Setyawati',
             'nisn' => '1234555',
             'no_hp' => '0896115583',
             'alamat' => 'JLN. Raya Jembatan Cinangneng',

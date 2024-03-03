@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teacher_attendances', function (Blueprint $table) {
+        Schema::create('jadwal_pikets', function (Blueprint $table) {
             $table->id();
-            $table->string('tanggal', 20)->required();
-            $table->string('description', 10)->required();
+            $table->string('hari', 20)->unique();
+            $table->string('nip', 100)->required();
+            $table->string('name', 100)->required();
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teacher_attendances');
+        Schema::dropIfExists('jadwal_pikets');
     }
 };

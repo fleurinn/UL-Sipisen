@@ -39,4 +39,12 @@ class Major extends Model
     {
         return $this->hasMany(Schedule::class);
     }
+
+    /**
+     * Get the student attendances for the major.
+     */
+    public function classstudents()
+    {
+        return $this->hasMany(ClassStudent::class);
+    }
 }

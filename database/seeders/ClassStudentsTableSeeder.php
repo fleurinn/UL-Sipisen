@@ -13,6 +13,7 @@ class ClassStudentsTableSeeder extends Seeder
     public function run()
     {
         ClassStudent::create([
+            'majors_id' => 1,
             'name' => 'XI PPLG 1',
         ]);
     }

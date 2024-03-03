@@ -17,10 +17,12 @@ class DataStudentController extends Controller
          * @return View
          */
         public function index()
-        {
-            //get DataStudent
-            $data_students  = DataStudent::when(request()->search, function($data_students) {
-                $data_students  = $data_students->where('name', 'like', '%'. request()->search . '%');
+        {   
+            $data_students = DataStudent::with(['classstudents' => function ($query) {
+                $query->select('id', 'name');
+            }])->select('id', 'classstudents_id','name','nisn','no_hp','alamat')
+            ->when(request()->search, function($query) {
+                $query->where('classstudents_id', 'like', '%' . request()->search . '%');
             })->latest()->paginate(5);
     
             //append query string to pagination links
@@ -42,6 +44,7 @@ class DataStudentController extends Controller
              * Validate request
              */
             $validator = Validator::make($request->all(), [
+                'classstudents_id'=> 'required',
                 'name' => 'required',
                 'nisn' => 'required',
                 'no_hp' => 'required',
@@ -54,6 +57,7 @@ class DataStudentController extends Controller
 
             // Create DataStudent
             $datastudent = DataStudent::create([
+                'classstudents_id'=> $request->classstudents_id,
                 'name' => $request->name,
                 'nisn' => $request->nisn,
                 'no_hp' => $request->no_hp,
@@ -78,8 +82,11 @@ class DataStudentController extends Controller
         public function show($id)
         {
             //get role
-            $datastudent = DataStudent::findOrFail($id);
-    
+            $data_students = DataStudent::with(['classstudents' => function ($query) {
+                $query->select('id', 'name');
+            }])->select('id', 'classstudents_id','name','nisn','no_hp','alamat')
+            ->where('classstudents_id', $id)->get();
+
             if($datastudent) {
                 //return success with Api Resource
                 return new DataStudentResource(true, 'Detail Data Siswa', $datastudent);
@@ -102,6 +109,7 @@ class DataStudentController extends Controller
              * Validate request
              */
             $validator = Validator::make($request->all(), [
+                'classstudents_id'=> 'required',
                 'name' => 'required',
                 'nisn' => 'required',
                 'no_hp' => 'required',
@@ -114,6 +122,7 @@ class DataStudentController extends Controller
 
             // Update DataStudent
             $datastudent->update([
+                'classstudents_id'=> $request->classstudents_id,
                 'name' => $request->name,
                 'nisn' => $request->nisn,
                 'no_hp' => $request->no_hp,
@@ -159,11 +168,6 @@ class DataStudentController extends Controller
         {
             // //get DataStudent
             $datastudent = DataStudent::latest()->get();
-    
-            // $datastudent = DB::table('data_students')
-            // ->join('majors', 'majors.id', '=', 'data_students.major_id')
-            // ->select('data_students.*', 'majors.name')
-            // ->get();
 
             //return with Api Resource
             return new DataStudentResource(true, 'List Data Siswa', $datastudent);

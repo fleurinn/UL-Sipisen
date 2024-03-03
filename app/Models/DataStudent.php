@@ -10,6 +10,7 @@ class DataStudent extends Model
     protected $table = 'data_students'; // Nama tabel dalam basis data
 
     protected $fillable = [
+        'classstudents_id',
         'name',
         'nisn',
         'no_hp',
@@ -31,5 +32,10 @@ class DataStudent extends Model
     public function izins()
     {
         return $this->hasOne(Izin::class);
+    }
+
+    public function classstudents()
+    {
+        return $this->belongsTo(ClassStudent::class)->select('id', 'name');
     }
 }

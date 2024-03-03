@@ -64,12 +64,8 @@ class IzinController extends Controller
             $query->select('id', 'name');
         }, 'subjects' => function ($query) {
             $query->select('id', 'name');
-        }])
-        ->select('id', 'data_students_id', 'classstudents_id','tanggal', 'subjects_id',  'description')
-        ->when(request()->search, function($query) {
-            $query->where('data_students_id', 'like', '%' . request()->search . '%');
-        })->latest()->paginate(5);
-    
+        }])->select('id', 'data_students_id', 'classstudents_id','tanggal', 'subjects_id',  'description')->where('data_students_id', $id)->get();
+        
         if ($izin) {
             return new IzinResource(true, 'Detail Data Izin!', $izin);
         }

@@ -111,5 +111,13 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/izins', App\Http\Controllers\Api\Admin\IzinController::class)
         ->middleware('permission:izins.index|izins.store|izins.update|izins.delete');
    
+        //teacherattendance 
+        Route::apiResource('/teacherattendances', App\Http\Controllers\Api\Admin\TeacherAttendanceController::class)
+        ->middleware('permission:teacherattendances.index|teacherattendances.store|teacherattendances.update|teacherattendances.delete');
+   
+         //jadwalpikets 
+         Route::apiResource('/jadwalpikets', App\Http\Controllers\Api\Admin\JadwalPiketController::class)
+        ->middleware('permission:jadwalpikets.index|jadwalpikets.store|jadwalpikets.update|jadwalpikets.delete');
+    
     });
 });
