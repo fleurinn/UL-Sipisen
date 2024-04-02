@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('izins', function (Blueprint $table) {
             $table->id();
             $table->string('tanggal', 20)->require();
+            $table->string('status')->default('pending');
             $table->string('description', 20)->require();
             $table->timestamps();
         });

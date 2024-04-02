@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Api\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ScheduleWednesdayResource; // Ubah Resource yang sesuai
+use App\Http\Resources\ScheduleWednesdayResource;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use App\Models\ScheduleWednesday; // Ubah model yang sesuai
+use App\Models\ScheduleWednesday;
 
 class ScheduleWednesdayController extends Controller
 {
@@ -18,12 +18,15 @@ class ScheduleWednesdayController extends Controller
      */
     public function index()
     {
-        // Get ScheduleWednesday // Ubah nama model yang sesuai
-        $schedulewednesdays = ScheduleWednesday::with(['subjects' => function ($query) {
+        // Get ScheduleWednesday
+        $schedulewednesdays = ScheduleWednesday::with(['classstudents' => function ($query) {
+            $query->select('id', 'name');
+        }, 'subjects' => function ($query) {
             $query->select('id', 'name');
         }, 'data_teachers' => function ($query) {
             $query->select('id', 'name');
-        }])->when(request()->has('search'), function ($query) {
+        }])->select('id', 'classstudents_id','subjects_id', 'data_teachers_id', 'start_time', 'end_time')
+        ->when(request()->has('search'), function ($query) {
             $query->where('id', 'like', '%' . request()->search . '%');
         })->latest()->paginate(5);
 
@@ -31,7 +34,7 @@ class ScheduleWednesdayController extends Controller
         $schedulewednesdays->appends(['search' => request()->search]);
 
         // Return with Api Resource
-        return new ScheduleWednesdayResource(true, 'List Data Kehadiran Siswa', $schedulewednesdays); // Ubah Resource yang sesuai
+        return new ScheduleWednesdayResource(true, 'List Data Jadwal Mata Pelajaran', $schedulewednesdays);
     }
 
 
@@ -47,6 +50,7 @@ class ScheduleWednesdayController extends Controller
          * Validate request
          */
         $validator = Validator::make($request->all(), [
+            'classstudents_id' => 'required',
             'subjects_id' => 'required',
             'data_teachers_id' => 'required',
             'start_time' => 'required',
@@ -57,8 +61,9 @@ class ScheduleWednesdayController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        // Create ScheduleWednesday // Ubah nama model yang sesuai
+        // Create ScheduleWednesday
         $schedulewednesday = ScheduleWednesday::create([
+            'classstudents_id' => $request->classstudents_id,
             'subjects_id' => $request->subjects_id,
             'data_teachers_id' => $request->data_teachers_id,
             'start_time' => $request->start_time,
@@ -67,16 +72,16 @@ class ScheduleWednesdayController extends Controller
 
         if ($schedulewednesday) {
             // Return success with Api Resource
-            return new ScheduleWednesdayResource(true, 'Data Kehadiran Siswa Berhasil di Simpan!', $schedulewednesday); // Ubah Resource yang sesuai
+            return new ScheduleWednesdayResource(true, 'Data Jadwal Mata Pelajaran Berhasil di Simpan!', $schedulewednesday);
         }
 
         // Return failed with Api Resource
-        return new ScheduleWednesdayResource(false, 'Data Kehadiran Siswa Gagal di Simpan!', null); // Ubah Resource yang sesuai
+        return new ScheduleWednesdayResource(false, 'Data Jadwal Mata Pelajaran Siswa Gagal di Simpan!', null);
     }
 
 
     /**
-     * show the form for editing the specified resource.
+     * Show the form for editing the specified resource.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -84,37 +89,39 @@ class ScheduleWednesdayController extends Controller
     public function show($id)
     {
         $schedulewednesday = ScheduleWednesday::with([
-            'subjects' => function ($query) {
+            'classstudents' => function ($query) {
+                $query->select('id', 'name');
+            }, 'subjects' => function ($query) {
                 $query->select('id', 'name');
             }, 'data_teachers' => function ($query) {
                 $query->select('id', 'name');
-            }
-        ])->find($id);
+            }])->select('id', 'classstudents_id','subjects_id', 'data_teachers_id', 'start_time', 'end_time')->where('classstudents_id', $id)->get();
+
 
         if ($schedulewednesday) {
             // Return success with Api Resource
-            return new ScheduleWednesdayResource(true, 'Detail Data Kehadiran!', $schedulewednesday); // Ubah Resource yang sesuai
+            return new ScheduleWednesdayResource(true, 'Detail Data Jadwal Mata Pelajaran!', $schedulewednesday);
         }
 
         // Return failed with Api Resource
-        return new ScheduleWednesdayResource(false, 'Detail Data Kehadiran Tidak Ditemukan!', null); // Ubah Resource yang sesuai
+        return new ScheduleWednesdayResource(false, 'Detail Data Jadwal Mata Pelajaran Tidak Ditemukan!', null);
     }
-
 
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param ScheduleWednesday $schedulewednesday
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ScheduleWednesday $schedulewednesday) // Ubah model yang sesuai
+    public function update(Request $request, ScheduleWednesday $schedulewednesday)
     {
         /**
          * Validate request
          */
         $validator = Validator::make($request->all(), [
+            'classstudents_id' => 'required',
             'subjects_id' => 'required',
             'data_teachers_id' => 'required',
             'start_time' => 'required',
@@ -125,8 +132,9 @@ class ScheduleWednesdayController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        // Update ScheduleWednesday // Ubah nama model yang sesuai
+        // Update ScheduleWednesday
         $schedulewednesday->update([
+            'classstudents_id' => $request->classstudents_id,
             'subjects_id' => $request->subjects_id,
             'data_teachers_id' => $request->data_teachers_id,
             'start_time' => $request->start_time,
@@ -135,11 +143,11 @@ class ScheduleWednesdayController extends Controller
 
         if ($schedulewednesday) {
             // Return success with Api Resource
-            return new ScheduleWednesdayResource(true, 'Data Kehadiran Siswa Berhasil di Update', $schedulewednesday); // Ubah Resource yang sesuai
+            return new ScheduleWednesdayResource(true, 'Data Jadwal Mata Pelajaran Siswa Berhasil di Update', $schedulewednesday);
         }
 
         // Return failed with Api Resource
-        return new ScheduleWednesdayResource(false, 'Data Kehadiran Siswa Gagal di Update', null); // Ubah Resource yang sesuai
+        return new ScheduleWednesdayResource(false, 'Data Jadwal Mata Pelajaran Siswa Gagal di Update', null);
     }
 
 
@@ -151,21 +159,21 @@ class ScheduleWednesdayController extends Controller
      */
     public function destroy($id)
     {
-        // Find schedulewednesday by ID // Ubah nama model yang sesuai
-        $schedulewednesday = ScheduleWednesday::find($id); // Ubah nama model yang sesuai
+        // Find schedulewednesday by ID
+        $schedulewednesday = ScheduleWednesday::find($id);
 
         if (!$schedulewednesday) {
-            return new ScheduleWednesdayResource(false, 'Data Kehadiran Siswa Tidak Ditemukan!', null); // Ubah Resource yang sesuai
+            return new ScheduleWednesdayResource(false, 'Data Jadwal Mata Pelajaran Siswa Tidak Ditemukan!', null);
         }
 
         // Delete schedulewednesday
         if ($schedulewednesday->delete()) {
             // Return success with Api Resource
-            return new ScheduleWednesdayResource(true, 'Data Kehadiran Siswa Berhasil di Hapus!', null); // Ubah Resource yang sesuai
+            return new ScheduleWednesdayResource(true, 'Data Jadwal Mata Pelajaran Siswa Berhasil di Hapus!', null);
         }
 
         // Return failed with Api Resource
-        return new ScheduleWednesdayResource(false, 'Data Kehadiran Siswa Gagal di Hapus!', null); // Ubah Resource yang sesuai
+        return new ScheduleWednesdayResource(false, 'Data Jadwal Mata Pelajaran Siswa Gagal di Hapus!', null);
     }
 
 
@@ -176,11 +184,10 @@ class ScheduleWednesdayController extends Controller
      */
     public function all()
     {
-        // //get ScheduleWednesday // Ubah nama model yang sesuai
-        $schedulewednesday = ScheduleWednesday::latest()->get(); // Ubah nama model yang sesuai
+        // Get all ScheduleWednesday
+        $schedulewednesday = ScheduleWednesday::latest()->get();
 
-        //return with Api Resource
-        return new ScheduleWednesdayResource(true, 'List Data Kehadiran Kehadiran Siswa', $schedulewednesday); // Ubah Resource yang sesuai
+        // Return with Api Resource
+        return new ScheduleWednesdayResource(true, 'List Data Jadwal Mata Pelajaran Siswa', $schedulewednesday);
     }
-
 }

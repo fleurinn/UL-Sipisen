@@ -44,7 +44,8 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->
+            son($validator->errors(), 422);
         }
 
         //create user

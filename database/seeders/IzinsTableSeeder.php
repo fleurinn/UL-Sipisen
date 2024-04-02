@@ -16,7 +16,6 @@ class IzinsTableSeeder extends Seeder
             'data_students_id' => '1',
             'classstudents_id' => '1',
             'tanggal' => '02 maret 2024',
-            'subjects_id' => '1',
             'description' => 'Beli motor'
         ]);
     }

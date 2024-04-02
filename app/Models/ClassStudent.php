@@ -62,5 +62,30 @@ class ClassStudent extends Model
     {
         return $this->hasMany(DataStudent::class);
     }
+
+    public function schedule_mondays()
+    {
+        return $this->hasMany(ScheduleMonday::class);
+    }
+
+    public function schedule_tuesdays()
+    {
+        return $this->hasMany(ScheduleTuesday::class);
+    }
+
+    public function schedule_wednesdays()
+    {
+        return $this->hasMany(ScheduleWednesday::class);
+    }
+
+    public function schedule_thursdays()
+    {
+        return $this->hasMany(ScheduleThursday::class);
+    }
+
+    public function schedule_fridays()
+    {
+        return $this->hasMany(ScheduleFriday::class);
+    }
 }
 

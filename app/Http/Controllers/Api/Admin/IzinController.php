@@ -16,10 +16,8 @@ class IzinController extends Controller
             $query->select('id', 'name');
         }, 'classstudents' => function ($query) {
             $query->select('id', 'name');
-        }, 'subjects' => function ($query) {
-            $query->select('id', 'name');
-        }])
-        ->select('id', 'data_students_id', 'classstudents_id','tanggal', 'subjects_id',  'description')
+        },])
+        ->select('id', 'data_students_id', 'classstudents_id','tanggal', 'status',  'description')
         ->when(request()->search, function($query) {
             $query->where('tanggal', 'like', '%' . request()->search . '%');
         })->latest()->paginate(5);
@@ -33,7 +31,7 @@ class IzinController extends Controller
             'data_students_id' => 'required',
             'classstudents_id' => 'required',
             'tanggal' => 'required',
-            'subjects_id' => 'required',
+            'status' => 'required',
             'description' => 'required',
         ]);
 
@@ -45,7 +43,7 @@ class IzinController extends Controller
             'data_students_id' => $request->data_students_id,
             'classstudents_id' => $request->classstudents_id,
             'tanggal' => $request->tanggal,
-            'subjects_id' => $request->subjects_id,
+            'status' => $request->status,
             'description' => $request->description,
         ]);
 
@@ -62,9 +60,9 @@ class IzinController extends Controller
             $query->select('id', 'name');
         }, 'classstudents' => function ($query) {
             $query->select('id', 'name');
-        }, 'subjects' => function ($query) {
+        }, 'status' => function ($query) {
             $query->select('id', 'name');
-        }])->select('id', 'data_students_id', 'classstudents_id','tanggal', 'subjects_id',  'description')->where('data_students_id', $id)->get();
+        }])->select('id', 'data_students_id', 'classstudents_id','tanggal', 'status',  'description')->where('data_students_id', $id)->get();
         
         if ($izin) {
             return new IzinResource(true, 'Detail Data Izin!', $izin);
@@ -79,7 +77,7 @@ class IzinController extends Controller
             'data_students_id' => 'required',
             'classstudents_id' => 'required',
             'tanggal' => 'required',
-            'subjects_id' => 'required',
+            'status' => 'required',
             'description' => 'required',
         ]);
 
@@ -91,7 +89,7 @@ class IzinController extends Controller
             'data_students_id' => $request->data_students_id,
             'classstudents_id' => $request->classstudents_id,
             'tanggal' => $request->tanggal,
-            'subjects_id' => $request->subjects_id,
+            'status' => $request->status,
             'description' => $request->description,
         ]);
 
@@ -122,5 +120,27 @@ class IzinController extends Controller
         $izins = Izin::latest()->get();
 
         return new IzinResource(true, 'List Data Izin', $izins);
+    }
+
+    public function accept_izin($id)
+    {
+        $data = Izin::find($id);
+
+        $data->izin_status='accepted';
+
+        $data->save();
+
+        return redirect()->back();
+    }
+
+    public function rejected_izin($id)
+    {
+        $data = Izin::find($id);
+
+        $data->izin_status='rejected';
+
+        $data->save();
+
+        return redirect()->back();
     }
 }

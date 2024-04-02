@@ -19,3 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/accept_post/{id}', [IzinController::class, 'accept_post']);
+
+Route::get('/rejected_post/{id}', [IzinController::class, 'rejected_post']);

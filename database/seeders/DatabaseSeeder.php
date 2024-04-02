@@ -33,7 +33,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ScheduleWednesdaysTableSeeder::class);
         $this->call(ScheduleThursdaysTableSeeder::class);
         $this->call(ScheduleFridaysTableSeeder::class);
-        $this->call(SchedulesTableSeeder::class);
-
+        $this->call(IzinsTableSeeder::class);
+        $this->call(JadwalPiketsTableSeeder::class);
+        $this->call(TeacherAttendancesTableSeeder::class);
     }
 }

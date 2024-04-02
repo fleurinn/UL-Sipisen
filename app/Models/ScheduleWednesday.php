@@ -19,7 +19,7 @@ class ScheduleWednesday extends Model
      * @var array
      */
     protected $fillable = [
-        'subjects_id', 'data_teachers_id', 'start_time', 'end_time'
+        'classstudents_id','subjects_id', 'data_teachers_id', 'start_time', 'end_time'
     ];
 
 
@@ -42,8 +42,8 @@ class ScheduleWednesday extends Model
     /**
      * Get the student schedule .
      */
-    public function schedules()
+    public function classstudents()
     {
-        return $this->hasMany(Schedule::class);
+        return $this->belongsTo(ClassStudent::class)->select('id','name');
     }
 }

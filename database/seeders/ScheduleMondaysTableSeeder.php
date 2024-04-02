@@ -16,6 +16,7 @@ class ScheduleMondaysTableSeeder extends Seeder
     {
         // Buat data untuk ScheduleMonday
         ScheduleMonday::create([
+            'classstudents_id' => '1',
             'subjects_id' => '1',
             'data_teachers_id' => '1',
             'start_time' => '07.30',

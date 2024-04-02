@@ -12,7 +12,7 @@ class Izin extends Model
     protected $table = 'izins';
 
     protected $fillable = [
-        'data_students_id', 'classstudents_id', 'tanggal', 'subjects_id', 'description'
+        'data_students_id', 'classstudents_id', 'tanggal', 'status', 'description'
     ];
     
 
@@ -25,14 +25,6 @@ class Izin extends Model
         return $this->belongsTo(DataStudent::class, 'data_students_id')->select('id', 'name');
     }
 
-    /**
-     * Get the major for the attendance.
-     * one to many
-     */
-    public function subjects()
-    {
-        return $this->belongsTo(Subject::class, 'subjects_id')->select('id', 'name');
-    }
 
 
     /**
