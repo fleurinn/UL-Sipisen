@@ -109,7 +109,7 @@ Route::prefix('admin')->group(function () {
 
         //izin 
         Route::apiResource('/izins', App\Http\Controllers\Api\Admin\IzinController::class)
-        ->middleware('permission:izins.index|izins.store|izins.update|izins.delete');
+        ->middleware('permission:izins.index|izins.store|izins.update|izins.delete|izins.accept_izin|izins.rejected_izin');
    
         //teacherattendance 
         Route::apiResource('/teacherattendances', App\Http\Controllers\Api\Admin\TeacherAttendanceController::class)

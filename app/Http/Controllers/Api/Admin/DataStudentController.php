@@ -87,9 +87,9 @@ class DataStudentController extends Controller
             }])->select('id', 'classstudents_id','name','nisn','no_hp','alamat')
             ->where('classstudents_id', $id)->get();
 
-            if($datastudent) {
+            if($data_students) {
                 //return success with Api Resource
-                return new DataStudentResource(true, 'Detail Data Siswa', $datastudent);
+                return new DataStudentResource(true, 'Detail Data Siswa', $data_students);
             }
     
             //return failed with Api Resource

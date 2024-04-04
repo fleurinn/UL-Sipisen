@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IzinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ Route::get('/', function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/accept_post/{id}', [IzinController::class, 'accept_post']);
+// Rute untuk menerima permintaan accept izin dari React JS
+Route::patch('/accept_izin/{id}', [IzinController::class, 'accept_izin']);
 
-Route::get('/rejected_post/{id}', [IzinController::class, 'rejected_post']);
+// Rute untuk menerima permintaan reject izin dari React JS
+Route::patch('/rejected_izin/{id}', [IzinController::class, 'rejected_izin']);

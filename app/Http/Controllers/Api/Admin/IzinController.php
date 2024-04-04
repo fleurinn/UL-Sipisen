@@ -31,7 +31,6 @@ class IzinController extends Controller
             'data_students_id' => 'required',
             'classstudents_id' => 'required',
             'tanggal' => 'required',
-            'status' => 'required',
             'description' => 'required',
         ]);
 
@@ -43,7 +42,6 @@ class IzinController extends Controller
             'data_students_id' => $request->data_students_id,
             'classstudents_id' => $request->classstudents_id,
             'tanggal' => $request->tanggal,
-            'status' => $request->status,
             'description' => $request->description,
         ]);
 
@@ -77,7 +75,6 @@ class IzinController extends Controller
             'data_students_id' => 'required',
             'classstudents_id' => 'required',
             'tanggal' => 'required',
-            'status' => 'required',
             'description' => 'required',
         ]);
 
@@ -89,7 +86,6 @@ class IzinController extends Controller
             'data_students_id' => $request->data_students_id,
             'classstudents_id' => $request->classstudents_id,
             'tanggal' => $request->tanggal,
-            'status' => $request->status,
             'description' => $request->description,
         ]);
 
@@ -126,7 +122,7 @@ class IzinController extends Controller
     {
         $data = Izin::find($id);
 
-        $data->izin_status='accepted';
+        $data->status='active';
 
         $data->save();
 
@@ -137,10 +133,11 @@ class IzinController extends Controller
     {
         $data = Izin::find($id);
 
-        $data->izin_status='rejected';
+        $data->status='rejected';
 
         $data->save();
 
         return redirect()->back();
     }
+
 }

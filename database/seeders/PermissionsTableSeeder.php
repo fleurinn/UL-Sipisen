@@ -106,6 +106,8 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'izins.create', 'guard_name' => 'api']);
         Permission::create(['name' => 'izins.edit', 'guard_name' => 'api']);
         Permission::create(['name' => 'izins.delete', 'guard_name' => 'api']);
+        Permission::create(['name' => 'izins.accept_izin', 'guard_name' => 'api']);
+        Permission::create(['name' => 'izins.rejected_izin', 'guard_name' => 'api']);
         
         //permission for teacherattendances
         Permission::create(['name' => 'teacherattendances.index', 'guard_name' => 'api']);
