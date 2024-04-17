@@ -162,4 +162,12 @@ class ClassStudentController extends Controller
             return new ClassStudentResource(true, 'List Data Kelas', $classstudent);
         }
     
+        // KelasController.php
+        public function indexByMajor($major)
+        {
+            // Ambil daftar kelas berdasarkan jurusan
+            $classstudent = ClassStudent::where('major', $major)->get();
+            
+            return response()->json($classstudent);
+        }
     }

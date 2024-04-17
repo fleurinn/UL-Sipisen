@@ -21,8 +21,4 @@ Route::get('/', function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-// Rute untuk menerima permintaan accept izin dari React JS
-Route::patch('/accept_izin/{id}', [IzinController::class, 'accept_izin']);
 
-// Rute untuk menerima permintaan reject izin dari React JS
-Route::patch('/rejected_izin/{id}', [IzinController::class, 'rejected_izin']);

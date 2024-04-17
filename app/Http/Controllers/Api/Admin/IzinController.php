@@ -117,27 +117,38 @@ class IzinController extends Controller
 
         return new IzinResource(true, 'List Data Izin', $izins);
     }
+    
 
     public function accept_izin($id)
-    {
-        $data = Izin::find($id);
-
-        $data->status='active';
-
-        $data->save();
-
-        return redirect()->back();
+{
+    // Validasi bahwa ID izin yang diberikan benar
+    $izin = Izin::find($id);
+    if (!$izin) {
+        return response()->json(['errors' => 'Izin tidak ditemukan.'], 404);
     }
 
-    public function rejected_izin($id)
-    {
-        $data = Izin::find($id);
+    // Ubah status menjadi 'accepted'
+    $izin->status = 'accepted';
+    $izin->save();
 
-        $data->status='rejected';
+    // Mengembalikan tanggapan JSON
+    return response()->json(['message' => 'Izin telah diterima.'], 200);
+}
 
-        $data->save();
-
-        return redirect()->back();
+public function rejected_izin($id)
+{
+    // Validasi bahwa ID izin yang diberikan benar
+    $izin = Izin::find($id);
+    if (!$izin) {
+        return response()->json(['errors' => 'Izin tidak ditemukan.'], 404);
     }
+
+    // Ubah status menjadi 'accepted'
+    $izin->status = 'rejected';
+    $izin->save();
+
+    // Mengembalikan tanggapan JSON
+    return response()->json(['message' => 'Izin telah diterima.'], 200);
+}
 
 }

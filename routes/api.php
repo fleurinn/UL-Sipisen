@@ -71,6 +71,10 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/majors', App\Http\Controllers\Api\Admin\MajorController::class)
         ->middleware('permission:majors.index|majors.store|majors.update|majors.delete');
 
+            // routes/api.php
+            Route::get('/major/{major}/classstudent', [App\Http\Controllers\Api\Admin\ClassStudentController::class,'ClassStudentController@indexByMajor'])
+            ->middleware('permission:classstudents.indexByMajor');
+
         //kelas
         Route::apiResource('/classstudents', App\Http\Controllers\Api\Admin\ClassStudentController::class)
         ->middleware('permission:classstudents.index|classstudents.store|classstudents.update|classstudents.delete');
@@ -111,6 +115,13 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('/izins', App\Http\Controllers\Api\Admin\IzinController::class)
         ->middleware('permission:izins.index|izins.store|izins.update|izins.delete|izins.accept_izin|izins.rejected_izin');
    
+            Route::patch('/accept_izin/{id}', [App\Http\Controllers\Api\Admin\IzinController::class, 'accept_izin'])
+            ->middleware('permission:izins.accept_izin');    
+        
+            Route::patch('/rejected_izin/{id}', [App\Http\Controllers\Api\Admin\IzinController::class, 'rejected_izin'])
+            ->middleware('permission:izins.rejected_izin');
+    
+
         //teacherattendance 
         Route::apiResource('/teacherattendances', App\Http\Controllers\Api\Admin\TeacherAttendanceController::class)
         ->middleware('permission:teacherattendances.index|teacherattendances.store|teacherattendances.update|teacherattendances.delete');
@@ -118,6 +129,6 @@ Route::prefix('admin')->group(function () {
          //jadwalpikets 
          Route::apiResource('/jadwalpikets', App\Http\Controllers\Api\Admin\JadwalPiketController::class)
         ->middleware('permission:jadwalpikets.index|jadwalpikets.store|jadwalpikets.update|jadwalpikets.delete');
-    
+
     });
 });
